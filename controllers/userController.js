@@ -9,16 +9,6 @@ const client = require("twilio")(
   "68b93949a2abd7502185fe92a6cf1920"
 );
 
-// const nodemailer = require('nodemailer');
-
-const generateOTP = () => {
-  var digits = "0123456789";
-  let OTP = "";
-  for (let i = 0; i < 4; i++) {
-    OTP += digits[Math.floor(Math.random() * 10)];
-  }
-  return OTP;
-};
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 

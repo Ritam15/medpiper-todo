@@ -24,6 +24,9 @@ var upload = multer({ storage: storage })
 router.post('/SignUp',upload.single('profileImage'),userController.registerUser)
 // login API
 router.post('/login', userController.loginPassword)
+router.post('/login/phone', userController.loginPhone);
+router.post('/login/phone/otp', userController.otpVerification);
+router.put('/user/update/:userId', middleware.userAuth, userController.updateUser);
 
 //enter otp
 

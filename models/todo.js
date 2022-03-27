@@ -11,11 +11,13 @@ const todoSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+      
     },
     status: {
       type: String,
       default: "Todo",
       required: true,
+      enum: ["Todo", "Doing", "Done"],
     },
     isDeleted: {
       type: Boolean,

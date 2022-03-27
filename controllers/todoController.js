@@ -6,19 +6,15 @@ const createtask = async function (req, res) {
     try {
         let boardId = req.params.boardId
         let requestBody = req.body
-        let userIdFromToken = req.userId
 
 
-        let boardData = await boardModel.findOne({ _id: boardId })
+        let boardData = await boardModel.findOne({ _id: boardId,isDeleted: false, deletedAt: null  })
 
         if (!boardData) {
             return res.status(400).send({ status: false, message: `${boardId} is not present` })
         }
 
-        if (boardData.userId.toString() != userIdFromToken) {
-            return res.status(400).send({ status: false, message: `Unauthorized access! Owner info doesn't match` })
-        }
-
+        
 
         let obj = {}
         obj['boardId'] = boardId
@@ -88,9 +84,9 @@ const updatetask = async function (req, res) {
             return res.status(400).send({ status: false, message: `${boardId} is not present` })
         }
 
-        if (boardData.userId.toString() != userIdFromToken) {
-            return res.status(400).send({ status: false, message: `Unauthorized access! Owner info doesn't match` })
-        }
+        // if (boardData.userId.toString() != userIdFromToken) {
+        //     return res.status(400).send({ status: false, message: `Unauthorized access! Owner info doesn't match` })
+        // }
        
         let task = await todoModel.findOne({ _id: taskId, isDeleted: false, status:'Done' })
         let taskStatus = task.status

@@ -13,9 +13,6 @@ const createtask = async function (req, res) {
         if (!boardData) {
             return res.status(400).send({ status: false, message: `${boardId} is not present` })
         }
-
-        
-
         let obj = {}
         obj['boardId'] = boardId
         //Extract Body
@@ -40,10 +37,7 @@ const createtask = async function (req, res) {
         res.status(500).send({ status: false, msg: err.message })
     }
 
-
-
 }
-
 
 const getTaskById = async function (req, res) {
     try {
@@ -83,12 +77,8 @@ const updatetask = async function (req, res) {
         if (!boardData) {
             return res.status(400).send({ status: false, message: `${boardId} is not present` })
         }
-
-        // if (boardData.userId.toString() != userIdFromToken) {
-        //     return res.status(400).send({ status: false, message: `Unauthorized access! Owner info doesn't match` })
-        // }
-       
-        let task = await todoModel.findOne({ _id: taskId, isDeleted: false, status:'Done' })
+  
+        let task = await todoModel.findOne({ _id: taskId, isDeleted: false })
         let taskStatus = task.status
 
         if (!task) {
@@ -116,9 +106,6 @@ const updatetask = async function (req, res) {
                     obj['status'] = status
                 
             }
-
-        
-
         let updateData = await todoModel.findOneAndUpdate({ _id: taskId }, obj, { new: true })
 
         res.status(200).send({ status: true, data: updateData })
@@ -140,10 +127,6 @@ const deleteTaskById = async function (req, res) {
 
         if (!boardData) {
             return res.status(400).send({ status: false, message: `${boardId} is not present or alredy deleted` })
-        }
-
-        if (boardData.userId.toString() != userIdFromToken) {
-            return res.status(400).send({ status: false, message: `Unauthorized access! Owner info doesn't match` })
         }
 
         if (!validator.isValidObjectId(taskId)) {
